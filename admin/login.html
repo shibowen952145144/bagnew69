@@ -15,6 +15,8 @@
     <script src="./libs/jquery-1.12.4.min.js"></script>
     <!-- 引入bootstrap的js文件 -->
     <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 引入 login.js 文件 -->
+    <script src="./js/login.js"></script>
 </head>
 
 <body>
@@ -25,7 +27,7 @@
                 CopyRight © 2019 深圳百秀信息技术股份有限公司<br />All Rights Reserved
             </div>
         </div>
-
+        <!-- 登录 -->
         <div class="login_form_con">
             <div class="login_title"></div>
             <form class="login_form">
@@ -38,6 +40,26 @@
         </div>
     </div>
 
+    <!-- 弹出来的模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">温馨提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 </body>
 
 </html>
