@@ -6,16 +6,17 @@ $(function() {
 
     $.ajax({
             type: 'get',
-            url: 'http://localhost:8080/api/v1/admin/user/info',
+            // url: 'http://localhost:8080/api/v1/admin/user/info',
+            url: BigNew.user_info,
             beforeSend(xhr) {
                 xhr.setRequestHeader("Authorization", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYWRtaW4iLCJleHAiOjIyMDMzMjQxNDQsImlhdCI6MTU5ODUyNDE0NH0.wdogqLEKbkPLz5wasIEI0rxdciYGaxIpY-Da-BOR7gMggqKZf7nksaNtZLKJ4lY8SMHrP5lu-m6kJ87yBfC8lkerUOwIzqCJXcX7F0YMV5Ee_IrdY-Wr-Z55tVs-a9sncMHztk-ySoL7OY4aWhTS5Etq7H5OoEePBa8xMtfeCYM");
             },
             success: function(res) {
                 if (res.code == 200) {
                     //  将服务器响应回来的昵称显示出来
-                    $('.user_info span').html(`欢迎&nbsp;&nbsp;${res.data.nickname}`)
+                    $('.sider .user_info span').html(`欢迎&nbsp;&nbsp;${res.data.nickname}`)
                         //  显示登录用户的头像
-                    $('.user_info img').attr('src', res.data.userPic)
+                    $('.sider .user_info img').attr('src', res.data.userPic)
                         // 个人中心旁边的头像也要替换
                     $('.header_bar img').attr('src', res.dara.userPic)
                 }
