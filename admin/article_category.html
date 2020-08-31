@@ -30,7 +30,7 @@
                 <thead>
                     <tr>
                         <th>名称</th>
-                        <th>Slug</th>
+                        <th>类别</th>
                         <th class="text-center" width="100">操作</th>
                     </tr>
                 </thead>
@@ -39,8 +39,8 @@
                         <td>奇趣事</td>
                         <td>funny</td>
                         <td class="text-center">
-                            <a href="javascript:void(0)" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
-                            <a href="javascript:void(0)" class="btn btn-danger btn-xs">删除</a>
+                            <a href="javascript:void(0)" data-id="{{value.id}}" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
+                            <button data-id="{{value.id}}" class="btn btn-danger btn-xs btn-del">删除</button>
                         </td>
                     </tr>
                 </tbody>
@@ -61,7 +61,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Modal title</h4>
+                    <h4 class="modal-title">添加文章分类</h4>
                 </div>
                 <div class="modal-body">
                     <!-- <p>One fine body&hellip;</p> 替换内容 -->
@@ -84,6 +84,27 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <!-- 页面添加一个删除框 -->
+    <div class="modal fade" id="delModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">温馨提示...</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您是否真的确定要删除此文章分类???</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-sure">确定</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- /.modal -->
     <script type="text/template" id="categoryList">
         {{each data value index}}
@@ -91,8 +112,8 @@
             <td>{{value.name}}</td>
             <td>{{value.slug}}</td>
             <td class="text-center">
-                <a href="javascript:void(0)" data-id="{{value.id}}" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
-                <a href="javascript:void(0)" data-id="{{value.id}}" class="btn btn-danger btn-xs">删除</a>
+                <button data-id="{{value.id}}" data-toggle="modal" data-target="#myModal" class=" btn btn-info btn-xs">编辑</button>
+                <button data-id="{{value.id}}" data-toggle="modal" data-target="#delModal" class="btn btn-danger btn-xs btn-del">删除</button>
             </td>
         </tr>
         {{/each}}
