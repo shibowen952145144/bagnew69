@@ -31,26 +31,32 @@ $(function() {
         // 3. 实现左侧按钮的高亮显示功能
         // 3.1 给左侧所有的按钮注册事件 
     $('.menu .level01').on('click', function() {
-        // 3.2 让被单击的变高亮 其实就是添加了一个active类 其余的变成普通颜色
-        $(this).addClass('active').siblings('.level01').removeClass('active')
+            // 3.2 让被单击的变高亮 其实就是添加了一个active类 其余的变成普通颜色
+            $(this).addClass('active').siblings('.level01').removeClass('active')
 
-        // 3.3 当单击的是'文章管理'的这个按钮的时候，应该让ul有一个展开或合并的功能
-        // 其实就是一个切换
-        if ($(this).index() == 1) {
-            // 3.4 让ul展开或合并
-            $('.menu .level02').slideToggle()
+            // 3.3 当单击的是'文章管理'的这个按钮的时候，应该让ul有一个展开或合并的功能
+            // 其实就是一个切换
+            if ($(this).index() == 1) {
+                // 3.4 让ul展开或合并
+                $('.menu .level02').slideToggle()
 
-            // 3.5 让右侧的小三解进行旋转  切换类的操作
-            $('.menu .level01:eq(1) b').toggleClass('rotate0')
+                // 3.5 让右侧的小三解进行旋转  切换类的操作
+                $('.menu .level01:eq(1) b').toggleClass('rotate0')
 
-            // 3.6 默认让子标签的第1个'文章列表'就高亮显示 触发器实现
-            $('.menu .level02 li:eq(0)').click()
-        }
-        // 除了登录接口之外，其它的后台接口，发送请求的时候，都需要带上token
-        // 这个token是需要在请求中设置
-        // 只有登录成功了之后，才会有token值
+                // 3.6 默认让子标签的第1个'文章列表'就高亮显示 触发器实现
+                $('.menu .level02 li:eq(0)').click()
 
+            }
+            // 除了登录接口之外，其它的后台接口，发送请求的时候，都需要带上token
+            // 这个token是需要在请求中设置
+            // 只有登录成功了之后，才会有token值
+        })
+        // 给li标签注册事件进行高亮的显示
 
-
+    $('.menu .level02 li').on('click', function() {
+        $(this).addClass('active').siblings().removeClass('active')
     })
+
+
+
 })

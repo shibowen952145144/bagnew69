@@ -14,18 +14,21 @@ $(function() {
             success: function(res) {
                 // 如果请求成功，则跳转到主页面
                 // 弹出模态框
-                console.log(res)
+                // console.log(res)
                 $('#myModal').modal('show')
                     // 显示提示内容
-                $('#myModal .modal-body p').text(res.msg)
+                $('.modal-body p').html(res.msg)
                     //  登录成功之后 单击了确定按钮之后才要跳转到主页面
                 if (res.code == 200) {
                     // 给模态框注册一个隐藏触发事件
                     $('#myModal').on('hidden.bs.modal', function(e) {
-                        // 跳转到主页面
+                        // 应该将服务器端响应回来的token存储到本地存储当中
+                        localStorage.setItem('token', res.token)
+                            // 跳转到主页面
                         location.href = './index.html'
+
+
                     })
-                    localStorage.setItem('token', res.token)
                 }
             }
         })
