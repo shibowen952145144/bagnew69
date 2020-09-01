@@ -18,7 +18,8 @@ $(function() {
                         //  显示登录用户的头像
                     $('.sider .user_info img').attr('src', res.data.userPic)
                         // 个人中心旁边的头像也要替换
-                    $('.header_bar img').attr('src', res.dara.userPic)
+                        // $('.sider .user_center_link img').attr('src', res.dara.userPic)
+                    $('.sider .user_center_link img').attr('src', res.data.userPic)
                 }
             }
         }) // 给退出按钮注册事件
