@@ -31,19 +31,20 @@
         <div class="container-fluid common_con">
             <div class="row opt_btns">
                 <div class="col-xs-6">
-                    <form class="form-inline">
-                        <select id="selCategory" name="" class="form-control input-sm">
+                    <form class="form-inline" id="myForm">
+                        <select id="selCategory" name="type" class="form-control input-sm">
                             <option value="">所有分类</option>
                             <option>未分类</option>
                             <option>奇趣事</option>
                             <option>会生活</option>
                             <option>爱旅行</option>
                         </select>
-                        <select id="selStatus" name="" class="form-control input-sm">
+                        <select id="selStatus" name="state" class="form-control input-sm">
                             <option value="">所有状态</option>
                             <option value="草稿">草稿</option>
                             <option value="已发布">已发布</option>
                         </select>
+                        <input type="text" name="key">
                         <button id="btnSearch" class="btn btn-default btn-sm">筛选</button>
                     </form>
                 </div>
@@ -78,7 +79,7 @@
                     </tr>
                 </tbody>
             </table>
-
+            <!-- 分页结构 -->
             <div class="row text-center">
                 <ul id="pagination-demo" class="pagination-sm"></ul>
             </div>

@@ -12,25 +12,21 @@ $(function() {
                 }
             }
         })
-        // 渲染数据 获取文章列表页中的第一页的数据
+        // 2.1 发送ajax请求
     $.ajax({
-
             type: 'get',
-
             url: BigNew.article_query,
-
             success: function(res) {
-
+                // 2.2 将获取到的数据渲染到页面中  绑定模板和数据
                 var htmlStr = template('articleList', res.data)
                 $('tbody').html(htmlStr)
-
             }
-
         })
+        // 渲染数据 获取文章列表页中的第一页的数据
         // 3.1 封装一个实现分页的函数 是在获取文章列表页数据完成后来调用的
     function pagination(res) {
         $('#pagination-demo').twbsPagination({
-            // totalPages: 35,
+
             totalPages: res.data.totalPage,
             visiblePages: 7, // 每个显示的最多页码值
             first: '首页',
@@ -39,13 +35,52 @@ $(function() {
             next: '下一页',
             initiateStartPageClick: false,
             onPageClick: function(event, page) {
-                $('#page-content').text('Page ' + page)
+
+                $.ajax({
+                    type: 'get',
+                    url: BigNew.article_query,
+                    data: {
+                        key: $('#myForm input[name=key]').val(), // 关键词
+                        type: $('#myForm select[name=type]').val(), // 分类
+                        state: $('#myForm input[name=state]').val(), // 文章状态
+                        page: page, // 当前页码
+                        perpage: 6 // 默认显示的条数
+                    },
+                    success: function(res) {
+                        if (res.code == 200) {
+                            // 渲染数据
+                            var htmlStr = template('articleList', res.data)
+                            $('tbody').html(htmlStr)
+                        }
+                    }
+                })
             }
         })
     }
-
-
-
+    // 4.1 给form表单注册事件submit事件
+    $('#myForm').on('submit', function(e) {
+        // 4.2 阻止默认请求行为
+        e.preventDefault()
+            // 4.3 发送ajax请求 注意条件
+        $.ajax({
+            type: 'get',
+            url: BigNew.article_query,
+            data: {
+                key: $('#myForm input[name=key]').val(), // 关键词
+                type: $('#myForm select[name=type]').val(), // 分类
+                state: $('#myForm select[name=state]').val(), // 文章状态
+                page: 1, // 当前页码
+                perpage: 6 // 默认显示的条数
+            },
+            success: function(res) {
+                if (res.code == 200) {
+                    // 4.4 将筛选出来的数据渲染到页面上
+                    var htmlStr = template('articleList', res.data)
+                    $('tbody').html(htmlStr)
+                }
+            }
+        })
+    })
 
 
 
