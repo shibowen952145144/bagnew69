@@ -24,6 +24,8 @@ $(function() {
         })
         // 渲染数据 获取文章列表页中的第一页的数据
         // 3.1 封装一个实现分页的函数 是在获取文章列表页数据完成后来调用的
+    var currentPage = 1
+
     function pagination(res) {
         $('#pagination-demo').twbsPagination({
 
@@ -35,7 +37,8 @@ $(function() {
             next: '下一页',
             initiateStartPageClick: false,
             onPageClick: function(event, page) {
-
+                // 给当前页面变量赋值
+                currentPage = page
                 $.ajax({
                     type: 'get',
                     url: BigNew.article_query,
@@ -97,7 +100,71 @@ $(function() {
                 }
             })
         })
-        // 删除功能
+        // 删除功能    给模态框的删除按钮注册事件
+    $('#delModal').on('shown.bs.modal', function(e) {
+        //    确定删除的 文章的id
+        window.articleId = $(e.relatedTarget).data('id')
+    })
+    $('#delModal'.btn - sure).on('click', function() {
+        //    发送ajax请求
+        $.ajax({
+            type: 'post',
+            url: BigNew.article_delete,
+            data: {
+                id: window.articleId
+            },
+            success: function(res) {
+                if (res.code == 204) {
+                    //    删除文章成功后  要隐藏当前的模态框
+                    $('#delModal').modal('hide')
+                        // 还是要渲染当前页面的剩余数据
+                    $.ajax({
+                        type: 'get',
+                        url: BigNew.article_query,
+                        data: {
+                            key: $('#myForm input[name=key]').val(), // 关键词
+                            type: $('#myForm select[name=type]').val(), // 分类
+                            state: $('#myForm input[name=state]').val(), // 文章状态
+                            page: currentPage, //当前页码
+                            perpage: 6 // 默认显示的条数
+                        },
+                        success: function(res) {
+                            if (res.code == 200) {
+
+                                // 渲染数据
+                                var htmlStr = template('articleList', res.data)
+                                $('tbody').html(htmlStr)
+                                    // 判断特殊情况
+
+                                if (res.data.totalCount == 0) {
+                                    // 隐藏分页插件
+                                    $('#pagination-demo').hide().next().show()
+                                } else {
+                                    if (res.data.data.length == 0) {
+                                        currentPage -= 1
+                                    }
+                                    $('#pagination-demo').twbsPagination('changeTotalPages', res.data.totalPage, currentPage)
+
+                                }
+
+
+                            }
+
+
+
+                        }
+
+
+                    })
+                }
+            }
+        })
+
+
+
+
+
+    })
 
 
 })
