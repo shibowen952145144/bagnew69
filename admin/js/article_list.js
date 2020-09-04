@@ -102,18 +102,23 @@ $(function() {
         })
         // 删除功能    给模态框的删除按钮注册事件
     $('#delModal').on('shown.bs.modal', function(e) {
-        //    确定删除的 文章的id
-        window.articleId = $(e.relatedTarget).data('id')
-    })
-    $('#delModal'.btn - sure).on('click', function() {
+            //    确定删除的 文章的id
+            window.articleId = $(e.relatedTarget).data('id')
+        })
+        // 删除
+    $('#delModal #btn_sure').on('click', function() {
         //    发送ajax请求
         $.ajax({
             type: 'post',
+
             url: BigNew.article_delete,
+
             data: {
                 id: window.articleId
             },
             success: function(res) {
+                console.log(res)
+
                 if (res.code == 204) {
                     //    删除文章成功后  要隐藏当前的模态框
                     $('#delModal').modal('hide')
@@ -159,12 +164,71 @@ $(function() {
                 }
             }
         })
+    })
 
+    // 发表文章   注册事件
+    $('#release_btn').on('click', function() {
+        // 让左侧按钮高亮显示 
+        parent.$('.menu .level02 li:eq(1)').click()
+    })
+    $(function() {
+            // 发送ajax请求，获取文章分类
+            $.ajax({
+                type: 'get',
+                url: BigNew.category_list,
+                success: function(res) {
+                    var htmlStr = template('categoryList', res)
+                    $('#selCategory').html(htmlStr) //
+                }
+            })
+        })
+        // 新增文章前的图片预览
+        // 给文件标签注册事件
+    $('#inputCover').on('change', function() {
 
-
-
+        var file = this.files[0] //获取待上传的文件
+            // URL.createObjectURL 会将待上传的文件生成一个可浏览的地址
+        var url = URL.createObjectURL(file)
+            // 在图片上渲染出来  预览待上传的图片
+        $('#form .article_cover').attr('src', url)
+            // $('#form .article_cover').attr('src', URL.createObjectURL(this).files[0])
 
     })
 
+    // 给发布或存为草稿按钮注册事件
+    // 给form表单注册事件
+    $('#form').on('click', '.btn', function(e) {
+        // 阻止默认行为
+        e.preventDefault()
+            // 准备数据
+        var data = new FormData($('#form')[0])
+
+        // 将富文本编辑器中的数据添加到里面   富文本编辑器是一个div，因此要单独的来获取一下
+        data.append('content', editor.txt.html())
+            // 判断是哪个按钮进行的提交
+        if ($(e.target).hasClass('btn-release')) { // 修改操作
+
+            data.append('state', '已发布')
+        } else { // 存为草稿
+            data.append('stare', '草稿')
+        }
+        // 向服务器发送ajax请求
+        $.ajax({
+
+            type: 'post',
+            url: BigNew.article_publish,
+            data: data,
+            contentType: false, // 不要进行其它编码 不需要额外编码就是二进制
+            processData: false, // 不要转换成字符串
+            success: function(res) {
+                if (res.code == 200) {
+                    // 让父元素的文章列表项被选中
+                    parent.$('.menu .level02>li:eq(0)').click()
+                        // 跳转到文章列表页
+                    window.history.back()
+                }
+            }
+        })
+    })
 
 })
