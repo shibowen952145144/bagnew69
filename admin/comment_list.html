@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="css/main.css">
     <script src="./libs/jquery-1.12.4.min.js"></script>
     <script src="./libs/template-web.js"></script>
+    <!-- 引入接口文件 -->
+    <script src="./js/http.js"></script>
+    <!-- 插入分页插件 -->
+    <script src="./libs/jquery.twbsPagination.js"></script>
+    <!-- 引入当前页面文件 -->
+    <script src="./js/comment_list.js"></script>
+
 </head>
 
 <body>
@@ -23,15 +30,19 @@
             <table class="table table-striped table-bordered table-hover mp20">
                 <thead>
                     <tr>
+                        <th class="text-center">序号</th>
                         <th>作者</th>
                         <th>评论</th>
                         <th>评论在</th>
                         <th>提交于</th>
                         <th>状态</th>
-                        <th class="text-center" width="100">操作</th>
+                        <th class="text-center" width="200">操作</th>
                     </tr>
                 </thead>
                 <tbody>
+
+                </tbody>
+                <!-- <tbody>
                     <tr>
                         <td>小周</td>
                         <td>这是一条测试评论，欢迎光临</td>
@@ -139,10 +150,10 @@
                             <a href="javascript:editTr( 'trashed',11 );" class="btn btn-danger btn-xs">删除</a>
                         </td>
                     </tr>
-                </tbody>
+                </tbody> -->
             </table>
             <div class="row text-center">
-                <ul class="pagination pagination-sm">
+                <!-- <ul class="pagination pagination-sm">
                     <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
                     <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
                     <li class="page-item active"><a href="#" class="page-link">1</a></li>
@@ -154,8 +165,9 @@
                     <li class="page-item"><a href="#" class="page-link">7</a></li>
                     <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
                     <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
-                </ul>
-                <ul id="pagination" class="pagination-sm"></ul>
+                </ul> -->
+                <ul id="pagination-demo" class="pagination-sm"></ul>
+                <p id="pagination">暂时没有数据</p>
             </div>
 
         </div>
@@ -169,15 +181,16 @@
             <td>{{value.title}}</td>
             <td>{{value.date}}</td>
             {{if value.state=="已通过"}}
-            <td>已批准</td>
+            <td class="state">已批准</td>
             {{else if value.state =="已拒绝"}}
-            <td>已拒绝</td>
+            <td class="state">已拒绝</td>
             {{else}}
-            <td>待审核</td>
+            <td class="state">待审核</td>
             {{/if}}
             <td class="text-center">
-                <button data-id="{{value.id}}" class="btn btn-warning btn-xs">拒绝</button>
-                <button data-id="{{value.id}}" class="btn btn-danger btn-xs">删除</button>
+                <button data-id="{{value.id}}" class="btn btn-warning btn-xs btn-pass">通过</button>
+                <button data-id="{{value.id}}" class="btn btn-warning btn-xs btn-reject">拒绝</button>
+                <button data-id="{{value.id}}" class="btn btn-danger btn-xs btn-del">删除</button>
             </td>
         </tr>
         {{/each}}
