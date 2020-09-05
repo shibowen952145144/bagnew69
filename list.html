@@ -12,6 +12,9 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="js/jquery.pagination.min.js"></script>
+    <!-- 导包template -->
+    <script src="./js/template-web.js"></script>
+    <script src="./js/list.js"></script>
 </head>
 
 <body>
@@ -137,11 +140,11 @@
 
             <div id="pagination" class="page"></div>
             <script>
-                $(function () {
+                $(function() {
                     $("#pagination").pagination({
                         currentPage: 2,
                         totalPage: 8,
-                        callback: function (current) {
+                        callback: function(current) {
                             alert('ok!');
                         }
                     });
@@ -225,8 +228,22 @@
         <p>CopyRight © 2019 深圳大事件信息技术股份有限公司 All Rights Reserved</p>
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
-    <!-- 导包template -->
-    <script src="./js/template-web.js"></script>
+    <!-- 文章列表模板 -->
+    <script type="text/template" id="articleList">
+        {{each data value index}}
+        <div class="common_news_list">
+            <a href="#" class="list_pic"><img src="{{value.cover}}" alt=""></a>
+            <h4><a href="#">{{value.title}} </a></h4>
+            <p>{{value.content}}
+            </p>
+            <div class="new_info">
+                <span>标签：{{value.category}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读( {{value.read}}
+                    )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( {{value.comments}} )</span>
+                <b>发布于 {{value.date}}</b>
+            </div>
+        </div>
+        {{/each}}
+    </script>
 </body>
 
 </html>
