@@ -46,9 +46,7 @@ $(function() {
                     var htmlStr = template('articleList', res.data)
                     $('.setfr').html(str + htmlStr)
                 }
-
             }
         }
     })
-
 })
