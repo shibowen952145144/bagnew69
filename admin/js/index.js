@@ -57,7 +57,60 @@ $(function() {
     $('.menu .level02 li').on('click', function() {
         $(this).addClass('active').siblings().removeClass('active')
     })
+    $(function() {
+            // 1. 文章分类的展示
+            $.ajax({
+                type: 'get',
+                url: BigNew.category_list,
+                success: function(res) {
+                    console.log(res);
+                    if (res.code == 200) {
+                        // 生成带数据的html标签
+                        var htmlStr = template('categoryList', res)
 
+                        // 先渲染竖着的分类 
+                        $('.menu .level_two').html('<li class="up"></li>' + htmlStr)
+
+                        // 渲染横着的导航
+                        $('.menu .left_menu').html(htmlStr)
+                    }
+                }
+            })
+        })
+        // 热点图渲染
+    $.ajax({
+            type: 'get',
+            url: BigNew.hotPic_news,
+            success: function(res) {
+                if (res.code == 200) {
+                    var htmlStr = template('hotPicTmp', res)
+                    $('.focus_list').html(htmlStr)
+                }
+            }
+        })
+        // 最新资讯
+    $.ajax({
+            type: 'get',
+            url: BigNew.latest_news,
+            success: function(res) {
+                if (res.code == 200) {
+                    var htmlStr = template('latestNewsList', res)
+                    $('.common_news').html(htmlStr)
+                }
+            }
+        })
+        // 一周热门排行
+    $.ajax({
+        type: 'get',
+        url: BigNew.hotrank_list,
+        success: function(res) {
+            // console.log(res);
+            if (res.code == 200) {
+                var htmlStr = template('hotrank_list', res)
+                $('.hotrank_list').html(htmlStr)
+            }
+        }
+    })
 
 
 })
